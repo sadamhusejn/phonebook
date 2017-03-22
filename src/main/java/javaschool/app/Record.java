@@ -3,17 +3,19 @@ package javaschool.app;
 
 import asg.cliche.Command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Record {
     private static int count = 0;
     private int id;
     private String name;
-    private String phone;
+    private List<String> phones = new ArrayList<>();
     private String email;
 
     public Record() {
-        id = count++;
+
         id = ++count;
     }
 
@@ -29,19 +31,13 @@ public class Record {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-
-
+    public List<String> getPhones() {
+        return phones;
     }
 
 
     public void addPhones(String... phones) {
-        this.phone.addAll(Arrays.asList(phones));
+        this.phones.addAll(Arrays.asList(phones));
     }
 
     public String getEmail() {
@@ -54,6 +50,6 @@ public class Record {
 
     @Override
     public String toString() {
-        return id + " " + name + " " + phone + " " + email + count;
+        return id + " " + name + " " + phones + " " + email + count;
     }
 }
