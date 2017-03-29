@@ -8,15 +8,21 @@ import java.util.List;
 
 public class PhoneBook {
     private List<Record> recordList = new ArrayList<Record>();
+    Note m = new Note();
 
     @Command
-    public void create(String name, String email, String... phones) {
-        Record r = new Record();
+    public void createPerson(String name, String email, String... phones) {
+        Person r = new Person();
         r.setName(name);
         r.addPhones(phones);
         r.setEmail(email);
         recordList.add(r);
+    }
 
+    @Command
+    public void createNote(String name, String note) {
+        m.setName(name);
+        m.setText(note);
     }
 
     @Command
@@ -25,11 +31,18 @@ public class PhoneBook {
     }
 
     @Command
+    public String note() {
+        return m.getText();
+    }
+
+    @Command
     public void addPhones(int id, String phone) {
         for (Record r : recordList) {
-            if (r.getId() == id)
-                r.addPhones(phone);
-            break;
+            if (r instanceof Person && r.getId() == id) {
+                Person p = (Person) r;
+                p.addPhones(phone);
+            }
+
         }
     }
 
@@ -41,7 +54,15 @@ public class PhoneBook {
 
         for (Record r : recordList) {
             String name = r.getName().toLowerCase();
-            if (name.contains(str)) {
+            String email;
+            if (r instanceof Person) {
+                Person p = (Person) r;
+                email = p.getEmail().toLowerCase();
+
+            } else {
+                email = "";
+            }
+            if (name.contains(str) || email.contains(str)) {
                 result.add(r);
             }
         }
